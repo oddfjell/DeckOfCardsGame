@@ -43,6 +43,8 @@ public class HelloApplication extends Application {
         text.setFont(new Font(40));
         Scene scene = new Scene(new Group(text));
 
+//yee
+
         stage.setTitle("Welcome to JavaFX!");
         stage.setScene(scene);
         stage.sizeToScene();
