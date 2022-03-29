@@ -57,10 +57,29 @@ public class HelloApplication extends Application {
         gridpane.setPadding(new Insets(25,25,25,25));
         gridpane.setHgap(50);
         gridpane.setVgap(10);
+        gridpane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0))));
 
 
+        /**
+         * The text
+         */
 
         Text hand = new Text();
+
+        /**
+         * NO no
+         */
+
+        InputStream no = new FileInputStream("src\\main\\java\\ntnu\\idatt2002\\cardgame\\deckofcardsgame\\king-dice-cuphead.png");
+        Image imageNo = new Image(no);
+        ImageView imageViewNo = new ImageView();
+        imageViewNo.setImage(imageNo);
+        imageViewNo.setFitWidth(100);//575
+        imageViewNo.setPreserveRatio(true);
+
+        /**
+         * Buttons
+         */
 
         Button button = new Button();
         button.setText("Deal Hand");
@@ -68,15 +87,36 @@ public class HelloApplication extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 System.out.println("Faen");
-                deckOfCards.dealHand(10);
+                deckOfCards.dealHand(5);
                 hand.setText(deckOfCards.showHand());
-                gridpane.add(hand,0,1);
+                gridpane.add(hand,1,1);
+                gridpane.getChildren().remove(imageViewNo);
+                gridpane.add(imageViewNo,0,2);
             }
         });
 
-        Button exit = new Button();
+        /*Button exit = new Button();
         exit.setText("Exit");
-        exit.setOnAction(e -> System.exit(0));
+        exit.setOnAction(e -> System.exit(0));*/
+
+
+        Button remove = new Button();
+        remove.setText("Remove Hand");
+        remove.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("Faen");
+                gridpane.getChildren().remove(hand);
+                deckOfCards.shuffleCards();
+                gridpane.getChildren().remove(imageViewNo);
+                gridpane.add(imageViewNo,0,3);
+
+            }
+        });
+
+        /**
+         * Box
+         */
 
         //addTeam.setAlignment(Pos.BOTTOM_LEFT);
 
@@ -88,23 +128,18 @@ public class HelloApplication extends Application {
         Box box = new Box(400.0, 300.0,0.0);//400 og 300
         box.setMaterial(purple);
 
+        /**
+         * Title
+         */
+
         Text title = new Text();
         title.setText("Gambling");
         title.setFont(Font.font ("Comic Sans MS", 30));
         title.setFill(Color.MEDIUMPURPLE);
 
-
-        Button remove = new Button();
-        remove.setText("Remove Hand");
-        remove.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                System.out.println("Faen");
-                gridpane.getChildren().remove(hand);
-                deckOfCards.shuffleCards();
-            }
-        });
-
+        /**
+         * Image and icon
+         */
 
         //InputStream stream = new FileInputStream("src\\main\\java\\ntnu\\idatt2002\\cardgame\\deckofcardsgame\\mrDice2.png");
         InputStream stream = new FileInputStream("src\\main\\java\\ntnu\\idatt2002\\cardgame\\deckofcardsgame\\mrDice.png");
@@ -119,15 +154,6 @@ public class HelloApplication extends Application {
         //gridpane.add(image, 2, 2);
 
 
-        //gridpane.setBackground(new Background(new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)));
-        gridpane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0))));
-        //gridpane.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0))));
-
-
-        /*Image image = new Image("src/main/java/ntnu/idatt2002/cardgame/deckofcardsgame/mrDice.png");
-        stage.getIcons().add(image);*/
-        //stage.getIcons().add(new Image("src\\main\\java\\ntnu\\idatt2002\\cardgame\\deckofcardsgame\\mrDice2.png"));
-
         InputStream icon = new FileInputStream("src\\main\\java\\ntnu\\idatt2002\\cardgame\\deckofcardsgame\\mrDice.png");
         Image imageIcon = new Image(icon);
         ImageView imageViewIcon = new ImageView();
@@ -135,12 +161,17 @@ public class HelloApplication extends Application {
         stage.getIcons().add(imageIcon);
 
 
+        /**
+         * The children
+         */
+
         gridpane.add(button, 0,2);
         gridpane.add(box,1,1);
-        gridpane.add(exit, 1,2);
+        //gridpane.add(exit, 1,2);
         gridpane.add(title,0,0);
         gridpane.add(remove, 0,3);
         gridpane.add(imageView,0,1);
+        gridpane.add(imageViewNo,0,3);
 
 
         stage.show();

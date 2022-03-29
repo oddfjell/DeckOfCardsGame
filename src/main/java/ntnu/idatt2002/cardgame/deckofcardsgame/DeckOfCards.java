@@ -85,6 +85,10 @@ public class DeckOfCards {
         return face;
     }
 
+    public boolean isFlush(){
+        return false;
+    }
+
 
 
     /*
