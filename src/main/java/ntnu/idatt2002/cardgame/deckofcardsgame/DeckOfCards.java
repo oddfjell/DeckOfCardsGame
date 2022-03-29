@@ -26,7 +26,7 @@ public class DeckOfCards {
         return hand;
     }
 
-    public ArrayList<PlayingCard> setHand(String string){
+    /*public ArrayList<PlayingCard> setHand(String string){
         for(PlayingCard playingCard:playingCards){
             if(playingCard.getAsString().equals(string)){
                 hand.add(playingCard);
@@ -34,7 +34,7 @@ public class DeckOfCards {
             }
         }
         return hand;
-    }
+    }*/
 
     public ArrayList<PlayingCard> dealHand(int n){
         //ArrayList<PlayingCard> hand = new ArrayList<>();
@@ -66,7 +66,7 @@ public class DeckOfCards {
     public String showHand(){
         String cards = "";
         for(PlayingCard playingCard:hand){
-            cards += playingCard.getAsString() + " || ";
+            cards += playingCard.getAsString() + " | ";
         }
         return cards;
     }
@@ -85,13 +85,6 @@ public class DeckOfCards {
         return face;
     }
 
-    public boolean isFlush(){
-        return false;
-    }
-
-
-
-    /*
     public String getTheSuitsInOneString(){
         String suit = "";
         for(PlayingCard playingCard : hand){
@@ -100,11 +93,37 @@ public class DeckOfCards {
         return suit;
     }
 
+    public boolean isFlush(){
+        long numberOfDifferentChars = getTheSuitsInOneString().chars().distinct().count();
+        return numberOfDifferentChars == 1;
+    }
+
+    public String isHearts(){
+        String hearts = "";
+        for(PlayingCard playingCard : hand){
+            if(playingCard.getSuit() == 'H'){
+                hearts += playingCard.getAsString() + " | ";
+            }
+        }
+        if(hearts.length() == 0){
+            hearts = "There are no hearts";
+        }
+        return hearts;
+    }
+
+
+
+
+    //TODO A == 1 NOT 13
+
+
+
+/*
     public boolean isRoyalFlush(){
         long numberOfDifferentChars = getTheSuitsInOneString().chars().distinct().count();
         return getFaceValue() == 60 && numberOfDifferentChars == 1;
     }
-    public boolean isStraightFLush(){
+    public boolean isStraightFLush(){//no -- TODO fix
         long numberOfDifferentChars = getTheSuitsInOneString().chars().distinct().count();
         return numberOfDifferentChars == 1;
     }

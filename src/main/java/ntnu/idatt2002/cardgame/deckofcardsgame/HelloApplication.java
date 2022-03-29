@@ -65,6 +65,10 @@ public class HelloApplication extends Application {
          */
 
         Text hand = new Text();
+        Text hearts = new Text();
+        hearts.setText("Hearts: ");
+        gridpane.add(hearts,0,4);
+
 
         /**
          * NO no
@@ -86,12 +90,16 @@ public class HelloApplication extends Application {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println("Faen");
+                //System.out.println("Faen");
                 deckOfCards.dealHand(5);
                 hand.setText(deckOfCards.showHand());
                 gridpane.add(hand,1,1);
                 gridpane.getChildren().remove(imageViewNo);
                 gridpane.add(imageViewNo,0,2);
+
+                gridpane.getChildren().remove(hearts);
+                hearts.setText("Hearts: " + deckOfCards.isHearts());
+                gridpane.add(hearts,0,4);
             }
         });
 
@@ -105,11 +113,15 @@ public class HelloApplication extends Application {
         remove.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                System.out.println("Faen");
+                //System.out.println("Faen");
                 gridpane.getChildren().remove(hand);
                 deckOfCards.shuffleCards();
                 gridpane.getChildren().remove(imageViewNo);
                 gridpane.add(imageViewNo,0,3);
+
+                gridpane.getChildren().remove(hearts);
+                hearts.setText("Hearts: ");
+                gridpane.add(hearts,0,4);
 
             }
         });
