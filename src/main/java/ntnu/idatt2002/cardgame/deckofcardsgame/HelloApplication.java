@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -22,7 +23,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class HelloApplication extends Application {
     @Override
@@ -52,10 +55,12 @@ public class HelloApplication extends Application {
         //stage.setFullScreen(true);
         stage.setScene(scene);
         gridpane.setPadding(new Insets(25,25,25,25));
-        gridpane.setHgap(150);
+        gridpane.setHgap(50);
         gridpane.setVgap(10);
 
 
+
+        Text hand = new Text();
 
         Button button = new Button();
         button.setText("Deal Hand");
@@ -64,13 +69,10 @@ public class HelloApplication extends Application {
             public void handle(ActionEvent actionEvent) {
                 System.out.println("Faen");
                 deckOfCards.dealHand(10);
-                Text text = new Text();
-                text.setText(deckOfCards.showHand());
-                
-                gridpane.add(text,0,1);
+                hand.setText(deckOfCards.showHand());
+                gridpane.add(hand,0,1);
             }
         });
-
 
         Button exit = new Button();
         exit.setText("Exit");
@@ -80,16 +82,42 @@ public class HelloApplication extends Application {
 
         //TextField textField = new TextField ();
 
-        PhongMaterial grey = new PhongMaterial();
-        grey.setDiffuseColor(Color.YELLOW);
-        //grey.setSpecularColor(Color.RED);
-        Box box = new Box(400.0, 300.0,0.0);
-        box.setMaterial(grey);
+        PhongMaterial purple = new PhongMaterial();
+        purple.setDiffuseColor(Color.MEDIUMPURPLE);
+        purple.setSpecularColor(Color.PURPLE);
+        Box box = new Box(400.0, 300.0,0.0);//400 og 300
+        box.setMaterial(purple);
 
         Text title = new Text();
         title.setText("Gambling");
         title.setFont(Font.font ("Comic Sans MS", 30));
-        title.setFill(Color.YELLOWGREEN);
+        title.setFill(Color.MEDIUMPURPLE);
+
+
+        Button remove = new Button();
+        remove.setText("Remove Hand");
+        remove.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                System.out.println("Faen");
+                gridpane.getChildren().remove(hand);
+                deckOfCards.shuffleCards();
+            }
+        });
+
+
+        //InputStream stream = new FileInputStream("src\\main\\java\\ntnu\\idatt2002\\cardgame\\deckofcardsgame\\mrDice2.png");
+        InputStream stream = new FileInputStream("src\\main\\java\\ntnu\\idatt2002\\cardgame\\deckofcardsgame\\mrDice.png");
+        Image image = new Image(stream);
+        ImageView imageView = new ImageView();
+        imageView.setImage(image);
+        //imageView.setX(10);
+        //imageView.setY(10);
+        imageView.setFitWidth(300);//575
+        imageView.setPreserveRatio(true);
+        //Image image = new Image("");
+        //gridpane.add(image, 2, 2);
+
 
         //gridpane.setBackground(new Background(new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)));
         gridpane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0))));
@@ -97,14 +125,22 @@ public class HelloApplication extends Application {
 
 
         /*Image image = new Image("src/main/java/ntnu/idatt2002/cardgame/deckofcardsgame/mrDice.png");
-        //stage.getIcons().add(new Image("src/main/java/ntnu/idatt2002/cardgame/deckofcardsgame"));
         stage.getIcons().add(image);*/
+        //stage.getIcons().add(new Image("src\\main\\java\\ntnu\\idatt2002\\cardgame\\deckofcardsgame\\mrDice2.png"));
+
+        InputStream icon = new FileInputStream("src\\main\\java\\ntnu\\idatt2002\\cardgame\\deckofcardsgame\\mrDice.png");
+        Image imageIcon = new Image(icon);
+        ImageView imageViewIcon = new ImageView();
+        imageViewIcon.setImage(imageIcon);
+        stage.getIcons().add(imageIcon);
 
 
-        gridpane.add(button, 0,4);
-        gridpane.add(box,0,1);
-        gridpane.add(exit, 0,3);
+        gridpane.add(button, 0,2);
+        gridpane.add(box,1,1);
+        gridpane.add(exit, 1,2);
         gridpane.add(title,0,0);
+        gridpane.add(remove, 0,3);
+        gridpane.add(imageView,0,1);
 
 
         stage.show();
