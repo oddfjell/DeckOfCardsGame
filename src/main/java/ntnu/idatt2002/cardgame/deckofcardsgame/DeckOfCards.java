@@ -33,36 +33,36 @@ public class DeckOfCards {
         return hand;
     }
 
-    /*public boolean isRoyalFlush(){
-
+    public boolean isRoyalFlush(){
+        return false;
     }
     public boolean isStraightFLush(){
-
+        return false;
     }
     public boolean isFourOfAKind(){
-
+        return false;
     }
     public boolean isFullHouse(){
-
+        return false;
     }
     public boolean isFlush(){
-
+        return false;
     }
     public boolean isStraight(){
-
+        return false;
     }
     public boolean isThreeOfAKind(){
-
+        return false;
     }
     public boolean isTwoPair(){
-
+        return false;
     }
     public boolean isPair(){
-
+        return false;
     }
     public boolean highCard(){
-
-    }*/
+        return false;
+    }
 
 
 
