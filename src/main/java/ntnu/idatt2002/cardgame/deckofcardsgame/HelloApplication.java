@@ -10,6 +10,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -26,6 +27,7 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        DeckOfCards deckOfCards = new DeckOfCards();
         //original
         /*FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 640, 480);
@@ -46,6 +48,7 @@ public class HelloApplication extends Application {
         GridPane gridpane = new GridPane();
         Scene scene = new Scene(gridpane,800, 600);
         stage.setTitle("DeckOfCards");
+        //stage.getIcons().add(new Image(HelloApplication.class.getResourceAsStream("Pictures/pngwing.com")));
         //stage.setFullScreen(true);
         stage.setScene(scene);
         gridpane.setPadding(new Insets(25,25,25,25));
@@ -55,12 +58,16 @@ public class HelloApplication extends Application {
 
 
         Button button = new Button();
-        button.setText("Add team");
+        button.setText("Deal Hand");
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 System.out.println("Faen");
-                gridpane.add(new Text(10,40,"elo"),0,1);
+                deckOfCards.dealHand(10);
+                Text text = new Text();
+                text.setText(deckOfCards.showHand());
+                
+                gridpane.add(text,0,1);
             }
         });
 
@@ -75,20 +82,28 @@ public class HelloApplication extends Application {
 
         PhongMaterial grey = new PhongMaterial();
         grey.setDiffuseColor(Color.YELLOW);
-        grey.setSpecularColor(Color.RED);
-        Box box = new Box(125.0, 50.0,0.0);
+        //grey.setSpecularColor(Color.RED);
+        Box box = new Box(400.0, 300.0,0.0);
         box.setMaterial(grey);
 
         Text title = new Text();
         title.setText("Gambling");
         title.setFont(Font.font ("Comic Sans MS", 30));
         title.setFill(Color.YELLOWGREEN);
-        gridpane.setBackground(new Background(new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        //gridpane.setBackground(new Background(new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)));
+        gridpane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0))));
+        //gridpane.setBackground(new Background(new BackgroundFill(Color.DARKGRAY, new CornerRadii(1), new Insets(0.0, 0.0, 0.0, 0.0))));
 
 
-        gridpane.add(button, 0,6);
-        gridpane.add(box,0,2);
-        gridpane.add(exit, 0,5);
+        /*Image image = new Image("src/main/java/ntnu/idatt2002/cardgame/deckofcardsgame/mrDice.png");
+        //stage.getIcons().add(new Image("src/main/java/ntnu/idatt2002/cardgame/deckofcardsgame"));
+        stage.getIcons().add(image);*/
+
+
+        gridpane.add(button, 0,4);
+        gridpane.add(box,0,1);
+        gridpane.add(exit, 0,3);
         gridpane.add(title,0,0);
 
 
