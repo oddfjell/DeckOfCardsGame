@@ -31,31 +31,12 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         DeckOfCards deckOfCards = new DeckOfCards();
-        //original
-        /*FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 640, 480);
-        stage.setTitle("DeckOfCards!");
-        stage.setScene(scene);
-        stage.show();*/
-
-        //does also work
-        /*Text text = new Text(10, 40, "Hello World!");
-        text.setFont(new Font(40));
-        Scene scene = new Scene(new Group(text));
-
-//yee
-
-        stage.setTitle("Welcome to JavaFX!");
-        stage.setScene(scene);
-        stage.sizeToScene();
-        stage.show();*/
-
         GridPane gridpane = new GridPane();
-        Scene scene = new Scene(gridpane,800, 600);
+        Scene scene = new Scene(gridpane,675, 650);//800 600
+
         stage.setTitle("DeckOfCards");
-        //stage.getIcons().add(new Image(HelloApplication.class.getResourceAsStream("Pictures/pngwing.com")));
-        //stage.setFullScreen(true);
         stage.setScene(scene);
+
         gridpane.setPadding(new Insets(25,25,25,25));
         gridpane.setHgap(50);
         gridpane.setVgap(10);
@@ -65,11 +46,25 @@ public class HelloApplication extends Application {
         /**
          * The text
          */
+        String heartsText = "Hearts: ";
+        String sumText = "Sum of your faces: ";
+        String isQueenOfSpadesText = "Is the Queen of Spades here?: ";
+        String flushText = "Flush?: ";
 
         Text hand = new Text();
+        hand.setFont(Font.font ("Comic Sans MS", 30));
+
         Text hearts = new Text();
-        hearts.setText("Hearts: ");
-        gridpane.add(hearts,0,4);
+        checkHandText(gridpane,hearts,heartsText,0,4);
+
+        Text sum = new Text();
+        checkHandText(gridpane,sum,sumText,0,5);
+
+        Text isQueenOfSpades = new Text();
+        checkHandText(gridpane,isQueenOfSpades,isQueenOfSpadesText,0,6);
+
+        Text flush = new Text();
+        checkHandText(gridpane,flush,flushText,0,7);
 
 
         /**
@@ -89,41 +84,67 @@ public class HelloApplication extends Application {
 
         Button button = new Button();
         button.setText("Deal Hand");
+        gridpane.add(button, 0,2); //TODO flyttet på den
+
+        Button remove = new Button();
+        remove.setText("Remove Hand");
+
+
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                //System.out.println("Faen");
                 deckOfCards.dealHand(5);
                 hand.setText(deckOfCards.showHand());
                 gridpane.add(hand,1,1);
-                gridpane.getChildren().remove(imageViewNo);
-                gridpane.add(imageViewNo,0,2);
+
+                gridpane.getChildren().remove(button);
+                gridpane.add(remove, 0,2);
+
+
+                /*gridpane.getChildren().remove(imageViewNo);
+                gridpane.add(imageViewNo,0,2);*/
+
+
 
                 gridpane.getChildren().remove(hearts);
-                hearts.setText("Hearts: " + deckOfCards.isHearts());
+                hearts.setText(heartsText + deckOfCards.isHearts());
                 gridpane.add(hearts,0,4);
+
+                gridpane.getChildren().remove(sum);
+                sum.setText(sumText + deckOfCards.getFaceValue());
+                gridpane.add(sum,0,5);
+
+                gridpane.getChildren().remove(isQueenOfSpades);
+                isQueenOfSpades.setText(isQueenOfSpadesText + deckOfCards.isQueenOfSpades());
+                gridpane.add(isQueenOfSpades,0,6);
+
+                gridpane.getChildren().remove(flush);
+                flush.setText(flushText + deckOfCards.isFlush());
+                gridpane.add(flush,0,7);
+
             }
         });
+
 
         /*Button exit = new Button();
         exit.setText("Exit");
         exit.setOnAction(e -> System.exit(0));*/
 
-
-        Button remove = new Button();
-        remove.setText("Remove Hand");
         remove.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                //System.out.println("Faen");
                 gridpane.getChildren().remove(hand);
                 deckOfCards.shuffleCards();
-                gridpane.getChildren().remove(imageViewNo);
-                gridpane.add(imageViewNo,0,3);
 
-                gridpane.getChildren().remove(hearts);
-                hearts.setText("Hearts: ");
-                gridpane.add(hearts,0,4);
+                gridpane.getChildren().remove(remove);
+                gridpane.add(button, 0,2);
+                /*gridpane.getChildren().remove(imageViewNo);
+                gridpane.add(imageViewNo,0,3);*/
+
+                removeText(gridpane,hearts,heartsText,0,4);
+                removeText(gridpane,sum,sumText,0,5);
+                removeText(gridpane,isQueenOfSpades,isQueenOfSpadesText,0,6);
+                removeText(gridpane,flush,flushText,0,7);
 
             }
         });
@@ -132,14 +153,10 @@ public class HelloApplication extends Application {
          * Box
          */
 
-        //addTeam.setAlignment(Pos.BOTTOM_LEFT);
-
-        //TextField textField = new TextField ();
-
         PhongMaterial purple = new PhongMaterial();
         purple.setDiffuseColor(Color.MEDIUMPURPLE);
         purple.setSpecularColor(Color.PURPLE);
-        Box box = new Box(400.0, 300.0,0.0);//400 og 300
+        Box box = new Box(275.0, 50.0,0.0);//400 og 300
         box.setMaterial(purple);
 
         /**
@@ -147,7 +164,7 @@ public class HelloApplication extends Application {
          */
 
         Text title = new Text();
-        title.setText("Gambling");
+        title.setText("Poker");
         title.setFont(Font.font ("Comic Sans MS", 30));
         title.setFill(Color.MEDIUMPURPLE);
 
@@ -155,18 +172,12 @@ public class HelloApplication extends Application {
          * Image and icon
          */
 
-        //InputStream stream = new FileInputStream("src\\main\\java\\ntnu\\idatt2002\\cardgame\\deckofcardsgame\\mrDice2.png");
         InputStream stream = new FileInputStream("src\\main\\java\\ntnu\\idatt2002\\cardgame\\deckofcardsgame\\mrDice.png");
         Image image = new Image(stream);
         ImageView imageView = new ImageView();
         imageView.setImage(image);
-        //imageView.setX(10);
-        //imageView.setY(10);
         imageView.setFitWidth(300);//575
         imageView.setPreserveRatio(true);
-        //Image image = new Image("");
-        //gridpane.add(image, 2, 2);
-
 
         InputStream icon = new FileInputStream("src\\main\\java\\ntnu\\idatt2002\\cardgame\\deckofcardsgame\\mrDice.png");
         Image imageIcon = new Image(icon);
@@ -179,11 +190,10 @@ public class HelloApplication extends Application {
          * The children
          */
 
-        gridpane.add(button, 0,2);
+
         gridpane.add(box,1,1);
         //gridpane.add(exit, 1,2);
         gridpane.add(title,0,0);
-        gridpane.add(remove, 0,3);
         gridpane.add(imageView,0,1);
         gridpane.add(imageViewNo,0,3);
 
@@ -193,5 +203,17 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public void checkHandText(GridPane gridpane, Text t, String s, int column, int row){
+        t.setFont(Font.font ("Comic Sans MS", 15));
+        t.setText(s);
+        gridpane.add(t,column,row);
+    }
+
+    public void removeText(GridPane gridpane, Text t, String s, int column, int row){
+        gridpane.getChildren().remove(t);
+        t.setText(s);
+        gridpane.add(t,column,row);
     }
 }

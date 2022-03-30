@@ -12,6 +12,7 @@ public class PlayingCard {
 
     private final char suit; // 'S'=spade, 'H'=heart, 'D'=diamonds, 'C'=clubs
     private final int face; // a number between 1 and 13
+    private final char suitSign;
 
     /**
      * Creates an instance of a PlayingCard with a given suit and face.
@@ -20,9 +21,10 @@ public class PlayingCard {
      *             'H' for Heart, 'D' for Diamonds and 'C' for clubs
      * @param face The face value of the card, an integer between 1 and 13
      */
-    public PlayingCard(char suit, int face) {
+    public PlayingCard(char suit, int face, char suitSign) {
         this.suit = suit;
         this.face = face;
+        this.suitSign = suitSign;
     }
 
     /**
@@ -33,6 +35,9 @@ public class PlayingCard {
      */
     public String getAsString() {
         return String.format("%s%s", suit, face);
+    }
+    public String getAsSignString() {
+        return String.format("%s%s", suitSign, face);
     }
 
     /**
@@ -51,5 +56,9 @@ public class PlayingCard {
      */
     public int getFace() {
         return face;
+    }
+
+    public int getSuitSign() {
+        return suitSign;
     }
 }

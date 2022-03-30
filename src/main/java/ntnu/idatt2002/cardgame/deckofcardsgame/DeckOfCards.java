@@ -7,15 +7,18 @@ import java.util.Random;
 public class DeckOfCards {
 
     private final char[] suit = {'S', 'H', 'D', 'C'};
+    private final char[] suitSign = {'♠', '♥', '♦', '♣'};
     private ArrayList<PlayingCard> playingCards;
     private ArrayList<PlayingCard> hand;
 
     public DeckOfCards(){
         playingCards = new ArrayList<>();
+        int suitSignCount = 0;
         for (char c : suit) {
             for (int j = 1; 14 > j; j++) {
-                playingCards.add(new PlayingCard(c, j));
+                playingCards.add(new PlayingCard(c, j, suitSign[suitSignCount]));
             }
+            suitSignCount++;
         }
     }
 
@@ -66,7 +69,7 @@ public class DeckOfCards {
     public String showHand(){
         String cards = "";
         for(PlayingCard playingCard:hand){
-            cards += playingCard.getAsString() + " | ";
+            cards += playingCard.getAsSignString() + " ";
         }
         return cards;
     }
@@ -85,30 +88,61 @@ public class DeckOfCards {
         return face;
     }
 
-    public String getTheSuitsInOneString(){
-        String suit = "";
-        for(PlayingCard playingCard : hand){
-            suit += playingCard.getSuit();
-        }
-        return suit;
-    }
 
-    public boolean isFlush(){
-        long numberOfDifferentChars = getTheSuitsInOneString().chars().distinct().count();
-        return numberOfDifferentChars == 1;
+
+    public String isFlush(){
+        int S = 0;
+        int H = 0;
+        int D = 0;
+        int C = 0;
+
+        for(PlayingCard playingCard : hand){
+            if(playingCard.getSuit()=='S'){
+                S++;
+            } else if(playingCard.getSuit()=='H'){
+                H++;
+            }else if(playingCard.getSuit()=='D'){
+                D++;
+            }else{
+                C++;
+            }
+        }
+
+        if(S >= 5){
+            return "♠Flush of spades♠";
+        }else if(H >= 5){
+            return "♥Flush of hearts♥";
+        }else if(D >= 5){
+            return "♦Flush of diamonds♦";
+        }else if (C >= 5){
+            return "♣Flush of clubs♣";
+        } else{
+            return "You do not have a flush";
+        }
+
+
     }
 
     public String isHearts(){
         String hearts = "";
         for(PlayingCard playingCard : hand){
             if(playingCard.getSuit() == 'H'){
-                hearts += playingCard.getAsString() + " | ";
+                hearts += playingCard.getAsSignString() + " ";
             }
         }
         if(hearts.length() == 0){
             hearts = "There are no hearts";
         }
         return hearts;
+    }
+
+    public boolean isQueenOfSpades(){
+        for(PlayingCard playingCard : hand){
+            if(playingCard.getAsString().equals("S12")){
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -118,7 +152,13 @@ public class DeckOfCards {
 
 
 
-/*
+/*public String getTheSuitsInOneString(){
+        String suit = "";
+        for(PlayingCard playingCard : hand){
+            suit += playingCard.getSuit();
+        }
+        return suit;
+    }
     public boolean isRoyalFlush(){
         long numberOfDifferentChars = getTheSuitsInOneString().chars().distinct().count();
         return getFaceValue() == 60 && numberOfDifferentChars == 1;
