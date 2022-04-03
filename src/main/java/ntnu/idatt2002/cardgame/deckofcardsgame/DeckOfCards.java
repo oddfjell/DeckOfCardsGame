@@ -11,6 +11,9 @@ public class DeckOfCards {
     private ArrayList<PlayingCard> playingCards;
     private ArrayList<PlayingCard> hand;
 
+    /**
+     * Constructor of the deck of cards
+     */
     public DeckOfCards(){
         playingCards = new ArrayList<>();
         int suitSignCount = 0;
@@ -22,25 +25,29 @@ public class DeckOfCards {
         }
     }
 
+    /**
+     * Gets all the playingcards as an ArrayList
+     * @return
+     */
     public ArrayList<PlayingCard> getAllPlayingCards(){
         return playingCards;
     }
+
+    /**
+     * Gets the hand of the player as an ArrayList
+     * @return
+     */
     public ArrayList<PlayingCard> getHand(){
         return hand;
     }
 
-    /*public ArrayList<PlayingCard> setHand(String string){
-        for(PlayingCard playingCard:playingCards){
-            if(playingCard.getAsString().equals(string)){
-                hand.add(playingCard);
-                playingCards.remove(playingCard);
-            }
-        }
-        return hand;
-    }*/
-
+    /**
+     * Method to deal the hand with a parameter for the number of cards.
+     * Removes the cards in the hand from the deck.
+     * @param n
+     * @return ArrayList
+     */
     public ArrayList<PlayingCard> dealHand(int n){
-        //ArrayList<PlayingCard> hand = new ArrayList<>();
         hand = new ArrayList<>();
         Random random = new Random();
         for(int i = 0; n > i; i++){
@@ -51,21 +58,21 @@ public class DeckOfCards {
         return hand;
     }
 
+    /**
+     * Method to shuffle cards.
+     * Removes the cards from the hand and creates them in the deck.
+     */
     public void shuffleCards(){
-        /*for(int i = 0; i < getHand().size(); i++){
-            playingCards.add(getHand().get(i));
-            hand.remove(getHand().get(i));
-            //playingCards.add(playingCard);
-            //hand.remove(playingCard);
-            ////PlayingCard playingCard : hand
-        }*/
-
         while(getHand().size() >= 1){
             playingCards.add(getHand().get(0));
             hand.remove(getHand().get(0));
         }
     }
 
+    /**
+     * String which returns the hand
+     * @return String
+     */
     public String showHand(){
         String cards = "";
         for(PlayingCard playingCard:hand){
@@ -74,12 +81,10 @@ public class DeckOfCards {
         return cards;
     }
 
-
     /**
-     * The client is only allowed to use these methods if he/her has five cards
-     * @return
+     * Gets the sum of the faces of the hand
+     * @return int
      */
-
     public int getFaceValue(){
         int face = 0;
         for (PlayingCard playingCard : hand) {
@@ -89,7 +94,10 @@ public class DeckOfCards {
     }
 
 
-
+    /**
+     * Checks if the players hand has a flush -> five cards with the same suit
+     * @return String
+     */
     public String isFlush(){
         int S = 0;
         int H = 0;
@@ -123,6 +131,10 @@ public class DeckOfCards {
 
     }
 
+    /**
+     * Checks if the hand has some hearts
+     * @return String
+     */
     public String isHearts(){
         String hearts = "";
         for(PlayingCard playingCard : hand){
@@ -136,6 +148,10 @@ public class DeckOfCards {
         return hearts;
     }
 
+    /**
+     * Checks if the queen of spades is in the hand
+     * @return true/false
+     */
     public boolean isQueenOfSpades(){
         for(PlayingCard playingCard : hand){
             if(playingCard.getAsString().equals("S12")){
@@ -144,86 +160,5 @@ public class DeckOfCards {
         }
         return false;
     }
-
-
-
-
-    //TODO A == 1 NOT 13
-
-
-
-/*public String getTheSuitsInOneString(){
-        String suit = "";
-        for(PlayingCard playingCard : hand){
-            suit += playingCard.getSuit();
-        }
-        return suit;
-    }
-    public boolean isRoyalFlush(){
-        long numberOfDifferentChars = getTheSuitsInOneString().chars().distinct().count();
-        return getFaceValue() == 60 && numberOfDifferentChars == 1;
-    }
-    public boolean isStraightFLush(){//no -- TODO fix
-        long numberOfDifferentChars = getTheSuitsInOneString().chars().distinct().count();
-        return numberOfDifferentChars == 1;
-    }
-    public boolean isFourOfAKind(){
-        for(int i = 1; i < 14; i++){
-            int count = 0;
-            for(PlayingCard playingCard : hand){
-                if(playingCard.getFace() == i){
-                    count++;
-                }
-            }
-            if (count == 4){
-                return true;
-            }
-        }
-        return false;
-    }
-    public boolean isFullHouse(){
-        for(int i = 1; i < 13; i++){
-            for(int j = 2; i < 14; j++){
-                if(i != j){
-                    int count3 = 0;
-                    int count2 = 0;
-
-                    for(PlayingCard playingCard : hand){
-                        if(playingCard.getFace() == i){
-                            count3++;
-                        } else if (playingCard.getFace() == j){
-                            count2++;
-                        }
-                    }
-
-                    if (count3 == 3 && count2 == 2){
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-    public boolean isFlush(){
-        return false;
-    }
-    public boolean isStraight(){
-        return false;
-    }
-    public boolean isThreeOfAKind(){
-        return false;
-    }
-    public boolean isTwoPair(){
-        return false;
-    }
-    public boolean isPair(){
-        return false;
-    }
-    public boolean highCard(){
-        return false;
-    }
-*/
-
-
 }
 

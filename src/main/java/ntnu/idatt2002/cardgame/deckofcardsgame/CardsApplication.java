@@ -27,9 +27,13 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class HelloApplication extends Application {
+public class CardsApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+
+        /**
+         * Here the pane, scene and stage is initialized
+         */
         DeckOfCards deckOfCards = new DeckOfCards();
         GridPane gridpane = new GridPane();
         Scene scene = new Scene(gridpane,675, 650);//800 600
@@ -44,7 +48,7 @@ public class HelloApplication extends Application {
 
 
         /**
-         * The text
+         * Makes the text on the pane
          */
         String heartsText = "Hearts: ";
         String sumText = "Sum of your faces: ";
@@ -68,7 +72,7 @@ public class HelloApplication extends Application {
 
 
         /**
-         * NO no
+         * Gif import
          */
 
         InputStream no = new FileInputStream("src\\main\\java\\ntnu\\idatt2002\\cardgame\\deckofcardsgame\\king-dice-cuphead.png");
@@ -79,7 +83,7 @@ public class HelloApplication extends Application {
         imageViewNo.setPreserveRatio(true);
 
         /**
-         * Buttons
+         *Here the buttons are initialised
          */
 
         Button button = new Button();
@@ -100,12 +104,6 @@ public class HelloApplication extends Application {
                 gridpane.getChildren().remove(button);
                 gridpane.add(remove, 0,2);
 
-
-                /*gridpane.getChildren().remove(imageViewNo);
-                gridpane.add(imageViewNo,0,2);*/
-
-
-
                 gridpane.getChildren().remove(hearts);
                 hearts.setText(heartsText + deckOfCards.isHearts());
                 gridpane.add(hearts,0,4);
@@ -125,11 +123,6 @@ public class HelloApplication extends Application {
             }
         });
 
-
-        /*Button exit = new Button();
-        exit.setText("Exit");
-        exit.setOnAction(e -> System.exit(0));*/
-
         remove.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -138,8 +131,6 @@ public class HelloApplication extends Application {
 
                 gridpane.getChildren().remove(remove);
                 gridpane.add(button, 0,2);
-                /*gridpane.getChildren().remove(imageViewNo);
-                gridpane.add(imageViewNo,0,3);*/
 
                 removeText(gridpane,hearts,heartsText,0,4);
                 removeText(gridpane,sum,sumText,0,5);
@@ -150,7 +141,7 @@ public class HelloApplication extends Application {
         });
 
         /**
-         * Box
+         * The box used to mark where you can se the hand
          */
 
         PhongMaterial purple = new PhongMaterial();
@@ -160,7 +151,7 @@ public class HelloApplication extends Application {
         box.setMaterial(purple);
 
         /**
-         * Title
+         * Title text
          */
 
         Text title = new Text();
@@ -187,12 +178,11 @@ public class HelloApplication extends Application {
 
 
         /**
-         * The children
+         * TAdding the objects to the pane
          */
 
 
         gridpane.add(box,1,1);
-        //gridpane.add(exit, 1,2);
         gridpane.add(title,0,0);
         gridpane.add(imageView,0,1);
         gridpane.add(imageViewNo,0,3);
@@ -201,16 +191,36 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
+    /**
+     * Launches the application
+     * @param args
+     */
     public static void main(String[] args) {
         launch();
     }
 
+    /**
+     * Method to get text
+     * @param gridpane
+     * @param t
+     * @param s
+     * @param column
+     * @param row
+     */
     public void checkHandText(GridPane gridpane, Text t, String s, int column, int row){
         t.setFont(Font.font ("Comic Sans MS", 15));
         t.setText(s);
         gridpane.add(t,column,row);
     }
 
+    /**
+     * Method to remove text
+     * @param gridpane
+     * @param t
+     * @param s
+     * @param column
+     * @param row
+     */
     public void removeText(GridPane gridpane, Text t, String s, int column, int row){
         gridpane.getChildren().remove(t);
         t.setText(s);
